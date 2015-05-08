@@ -1,3 +1,9 @@
+#
+# InVaDE - [In]nogames [Va]grant [D]evelopment [E]nvironment
+#
+# @author Lennart Stein
+# @email  lennart.stein@innogames.com
+#
 
 require './invade/module/BaseModule'
 require './invade/module/DefaultsModule'

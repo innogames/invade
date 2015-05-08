@@ -1,4 +1,12 @@
 #!/bin/bash
+
+#
+# InVaDE - [In]nogames [Va]grant [D]evelopment [E]nvironment
+#
+# @author Lennart Stein
+# @email  lennart.stein@innogames.com
+#
+
 [ `whoami` = root ] || exec sudo su -c $0
 
 echo 'Cleanup bash history'

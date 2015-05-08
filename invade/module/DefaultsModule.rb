@@ -1,3 +1,12 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#
+# InVaDE - [In]nogames [Va]grant [D]evelopment [E]nvironment
+#
+# @author Lennart Stein
+# @email  lennart.stein@innogames.com
+#
 
 # VAGRANT - GENERAL CONFIGURATION
 $vagrant_general_vm_name = "vagrant_invade_#{rand(500000).to_i}"

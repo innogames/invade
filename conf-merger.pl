@@ -1,5 +1,12 @@
 #!/usr/bin/perl -w
 
+#
+# InVaDE - [In]nogames [Va]grant [D]evelopment [E]nvironment
+#
+# @author Lennart Stein
+# @email  lennart.stein@innogames.com
+#
+
 # Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
 # Author: leak
 # Date: 2010-12-06
