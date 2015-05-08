@@ -1,0 +1,95 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+## All available configuration settings at module/DefaultsModule.rb
+
+# # # # - - - - - - - - - - -
+# VAGRANT - GENERAL CONFIGURATION
+#
+#   vagrant_box_name - The name of the vagrant box
+#           example: "puphpet/ubuntu1404-x64"
+#
+#   vagrant_base_box_url - URL/path of the vagrant base box
+#           default: "puphpet/ubuntu1404-x64"
+#
+# #
+$vagrant_general_box_name   = "puphpet/ubuntu1404-x64"
+$vagrant_general_box_url    = "puphpet/ubuntu1404-x64"
+
+# # # # - - - - - - - - - - -
+# VAGRANT - NETWORK CONFIGURATION
+#
+#   vagrant_network_ip - Set the IP of the project/box available locally
+#           example: 192.168.124.4
+#
+#   vagrant_network_hostname - The hostname of your project/box available locally
+#           example: local.invade
+#           tip: you can set aliases in plugin config section of hostmanager
+#
+# #
+$vagrant_network_ip         = "192.168.124.4"
+$vagrant_network_hostname   = "local.invade"
+
+# # # # - - - - - - - - - - -
+# VAGRANT - SHARED FOLDER CONFIGURATION
+#
+#   vagrant_shared_folder_source - Synced folder on host machine
+#           default: "../.."
+#
+#   vagrant_shared_folder_path - Synced folder on guest machine
+#           default: "/www"
+#
+#   vagrant_shared_folder_type - Set the sync folder technology you want to use
+#           default: nfs
+#
+#           "vb"    - Virtual Box
+#               speed   =>  slow
+#               os      =>  all
+#               sync    =>  bi-directional
+#
+#           "nfs" - NFS (Network File System)
+#               speed   =>  fast
+#               os      =>  all
+#               sync    =>  bi-directional
+#
+#           "smb" - SMB (Server Message Block)
+#               speed   =>  fast
+#               os      =>  win only
+#               sync    =>  bi-directional
+#
+$vagrant_shared_folder_source   = "../.."
+$vagrant_shared_folder_path     = "/www"
+$vagrant_shared_folder_type     = "nfs"
+
+# # # # - - - - - - - - - - -
+# VAGRANT - PERFORMANCE CONFIGURATION
+#
+#   Settings for find best setup for core amount and ram usage of your virtual machine
+#
+#   vagrant_performance_cores - Amount of cores you want to use
+#       default: 4
+#   vagrant_performance_ram - Amount of ram (in MB) you would like to give access to
+#       default: 1024
+#
+# #
+$vagrant_performance_cores  = 4
+$vagrant_performance_ram    = 1024
+
+# # # # - - - - - - - - - - -
+# VAGRANT - PUPPET MODULE CONFIGURATION
+#
+#   Install puppet modules through vagrant
+#
+#   vagrant_puppet_modules - Name of the module(s) to check and install through vagrant on the guest machine
+#       default: [ [] ] (multidimensal array)
+#       example: [ ['puppetforge', 'attachmentgenie-locales'], ['puppetforge', 'puppetlabs-mysql', '1.5.0'] ]
+#               [][0] = source
+#                       => puppetforge (puppetlabs approved modules from puppetforge)
+#                       => git (any git repository available in the internet)
+#               [][1]
+#                       => module name (if puppetforge source)
+#                       => git repository url (if git source)
+#               [][2] = version (optional)
+#
+# #
+$vagrant_puppet_modules = []
