@@ -7,8 +7,6 @@ $vagrant_general_composer = true
 $vagrant_general_package_state = "latest"
 $vagrant_general_apt_update = true
 $vagrant_general_vbguest = false
-$vagrant_general_vagrant_folder = "vagrant"
-$vagrant_general_invade_folder = "invade"
 
 # VAGRANT - NETWORK CONFIGURATION
 $vagrant_network_type = "private_network"
@@ -17,7 +15,7 @@ $vagrant_network_hostname = "local.invade"
 
 # VAGRANT - SHARED FOLDER CONFIGURATION
 $vagrant_shared_folder = true
-$vagrant_shared_folder_source = "."
+$vagrant_shared_folder_source = "../"
 $vagrant_shared_folder_path = "/www"
 $vagrant_shared_folder_type = "standard"
 $vagrant_shared_folder_owner = "vagrant"
@@ -40,7 +38,7 @@ $vagrant_ssh_public_key_filename = "id_rsa.pub"
 $vagrant_ssh_known_hosts = []
 
 # VAGRANT - PUPPET CONFIGURATION
-$vagrant_puppet = true
+$vagrant_puppet = false
 $vagrant_puppet_folder = "../puppet"
 $vagrant_puppet_hiera_file_path = ""
 $vagrant_puppet_modules_basic = [

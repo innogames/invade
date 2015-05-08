@@ -23,10 +23,6 @@ module Invade
         abort(self.error(message))
       else
         load 'InvadeConfig'
-
-        if( ($invade_enabled == false) || !(defined?($invade_enabled)) )
-          abort(self.error("InVaDE must be enabled. Fix your config!"))
-        end
       end
     end
   end

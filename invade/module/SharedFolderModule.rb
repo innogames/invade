@@ -27,6 +27,20 @@ module Invade
         return false
       end
 
+      case $provider
+      when "virtualbox"
+        $used_shared_folder_type = "vb"
+      when "vmware-fusion"
+        $used_shared_folder_type = "hbsf"
+      when "vmware-workstation"
+        $used_shared_folder_type = "hbsf"
+      else
+        $used_shared_folder_type = "Unknown"
+      end
+
+      guest_path = File.expand_path($vagrant_shared_folder_path)
+      self.info("Mounting #{$used_shared_folder_type.upcase} share:\n\t\"#{shared_folder_path}\" <=> \"#{guest_path}\"")
+
       return true
     end
 

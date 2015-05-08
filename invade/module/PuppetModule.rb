@@ -8,9 +8,30 @@ module Invade
 
     MODULE = "PUPPET"
 
+    def initialize()
+
+      $puppet = false
+
+      if $vagrant_puppet == true
+        if handlePuppetModules()
+          install()
+        end
+      end
+    end
+
+    private
+
+    def handlePuppetModules()
+      unless File.directory?($vagrant_puppet_folder)
+        self.warning("Puppet folder \"#{$vagrant_puppet_folder}\" not found. Puppet Provisioning is deactivated.")
+      else
+        $puppet = true
+      end
+    end
+
     def install()
-      mergedModules = self.concatModuleArray($vagrant_puppet_modules_basic, $vagrant_puppet_modules)
-      self.buildPuppetfile(mergedModules)
+      mergedModules = concatModuleArray($vagrant_puppet_modules_basic, $vagrant_puppet_modules)
+      buildPuppetfile(mergedModules)
     end
 
     # Concats an given Array with an other Array with data
