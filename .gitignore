@@ -1,0 +1,13 @@
+*.swp
+*.mo
+.DS_Store
+.buildpath
+.project
+.settings/
+etc/config/config.ini
+etc/build/
+cache/*
+logs/*
+vendor
+.idea
+nbproject
