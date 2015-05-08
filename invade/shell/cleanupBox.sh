@@ -5,6 +5,7 @@
 #
 # @author Lennart Stein
 # @email  lennart.stein@innogames.com
+# @web    http://github.com/innogames/invade
 #
 
 [ `whoami` = root ] || exec sudo su -c $0

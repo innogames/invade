@@ -5,6 +5,7 @@
 #
 # @author Lennart Stein
 # @email  lennart.stein@innogames.com
+# @web    http://github.com/innogames/invade
 #
 
 # Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>

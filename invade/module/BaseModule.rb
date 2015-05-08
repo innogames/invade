@@ -6,6 +6,7 @@
 #
 # @author Lennart Stein
 # @email  lennart.stein@innogames.com
+# @web    http://github.com/innogames/invade
 #
 
 require './invade/lib/Colorize'
