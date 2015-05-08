@@ -35,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Performance Configuration
   config.vm.provider :virtualbox do |v|
+    $provider = "virtualbox"
     v.name    = $vagrant_general_vm_name
     v.cpus    = $vagrant_performance_cores
     v.memory  = $vagrant_performance_ram
@@ -42,13 +43,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.customize ["modifyvm", :id, "--nicspeed1", "10485760"]
   end
 
-  config.vm.provider :vmware_fusion do |v|
+  config.vm.provider "vmware-fusion" do |v|
+    $provider = "vmware-fusion"
     v.name              = $vagrant_general_vm_name
     v.vmx["memsize"]    = $vagrant_performance_ram
     v.vmx["numvcpus"]   = $vagrant_performance_cores
   end
 
-  config.vm.provider :vmware_workstation do |v|
+  config.vm.provider "vmware-fusion" do |v|
+    $provider = "vmware-workstation"
     v.vmx["displayName"]    = $vagrant_general_vm_name
     v.vmx["memsize"]        = $vagrant_performance_ram
     v.vmx["numvcpus"]       = $vagrant_performance_cores
@@ -87,7 +90,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # SMB - Windows only
     elsif ($vagrant_shared_folder_type == 'smb' && InvadeOs.isWindows?)
-      $used_shared_folder_type = "SMB (Windows)"
       $absolute_shared_folder_source = File.expand_path($vagrant_shared_folder_source)
 
       if Vagrant.has_plugin?("vagrant-triggers")
@@ -105,16 +107,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # VB
     else
-      $used_shared_folder_type = "VB"
       config.vm.synced_folder $vagrant_shared_folder_source,
       $vagrant_shared_folder_path, id: "vagrant-root", owner: $vagrant_shared_folder_owner, group: $vagrant_shared_folder_group, mount_options: ["dmode=#{$vagrant_shared_folder_dmode},fmode=#{$vagrant_shared_folder_fmode}"], disabled: !$app
     end
-
-    host_path = File.expand_path($vagrant_shared_folder_source)
-    guest_path = File.expand_path($vagrant_shared_folder_path)
-    InvadeSharedFolder.info("Mounting #{$used_shared_folder_type.upcase} share:\n\t\"#{host_path}\" <=> \"#{guest_path}\"")
-  else
-    InvadeSharedFolder.warning("Shared folders are disabled.")
   end
 
   # # SSH configuration
@@ -154,9 +149,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Use puppet to setup and configure dependencies, packages and the project itself
-  if ($vagrant_puppet == true)
-
-    InvadePuppet.install()
+  if ($puppet == true)
 
     # Libarian Puppet configuration
     if Vagrant.has_plugin?("vagrant-librarian-puppet")
@@ -187,7 +180,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "apt_update"          => $vagrant_general_apt_update # Always APT Update
       }
     end
-  else
-    InvadeBase.warning("Puppet provisioning is disabled.")
   end
 end
