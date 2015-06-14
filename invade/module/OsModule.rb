@@ -12,13 +12,13 @@
 module Invade
   class Os < Base
 
-    MODULE = "OS"
+    MODULE = 'OS'
 
-    def initialize()
+    def initialize
       @host_os = RbConfig::CONFIG['host_os']
     end
 
-    def getOS?
+    def get_os
         case @host_os
         when /cygwin|mswin|mingw|bccwin|wince|emx/
           os = 'windows'
@@ -27,42 +27,30 @@ module Invade
         when /darwin/
           os = 'mac'
         else
-          raise(self.error("Can't find out on wich OS you're on. Abort!"))
+          self.exit_with_error("Can't find out on which operating system you're on. Exit!")
         end
 
-        return os
+        os
       end
 
-      def isWindows?
-        if(self.getOS? == 'windows')
-          return true
-        end
-
-        return false
+      def is_windows
+        return true if get_os == 'windows'
+        false
       end
 
-      def isMac?
-        if(self.getOS? == 'mac')
-          return true
-        end
-
-        return false
+      def is_mac
+        return true if get_os == 'mac'
+        false
       end
 
-      def isLinux?
-        if(self.getOS? == 'linux')
-          return true
-        end
-
-        return false
+      def is_linux
+        return true if get_os == 'linux'
+        false
       end
 
-      def isUnix?
-      	if(self.getOS? == 'mac' || self.getOS?() == 'linux')
-          return true
-        end
-
-        return false
+      def is_unix
+        return true if get_os == 'mac' || get_os == 'linux'
+        false
       end
 
   end

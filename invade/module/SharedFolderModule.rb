@@ -12,57 +12,48 @@
 module Invade
   class SharedFolder < Base
 
-    MODULE = "SHAREDFOLDER"
+    MODULE = 'SHAREDFOLDER'
 
     def initialize()
 
       $app = false
       $hiera = false
 
-      if $vagrant_shared_folder == true
-        $app = self.handleSharedFolder()
-        $hiera = self.handleHiera()
+      if $vagrant_shared_folder
+        $app = self.handle_shared_folder
+        $hiera = self.handle_hiera
       end
 
     end
 
-    def handleSharedFolder()
+    def handle_shared_folder
 
-      shared_folder_path = File.expand_path($vagrant_shared_folder_path)
+      shared_folder_path = File.expand_path($vagrant_shared_folder_source)
+      vagrant_path = File.expand_path(shared_folder_path + '/' + $vagrant_general_vagrant_folder + '/core')
 
       unless File.directory?(shared_folder_path)
-        self.warning("The folder you want to mount does not exists! Shared Folder is will NOT be mounted.")
+        self.exit_with_error('The folder you want to mount not exists!')
+      end
+
+      unless File.directory?(vagrant_path)
+        self.warning('Vagrant is not running inside an application environment! Shared folder will be disabled.')
         return false
       end
 
-      case $provider
-      when "virtualbox"
-        $used_shared_folder_type = "vb"
-      when "vmware-fusion"
-        $used_shared_folder_type = "hbsf"
-      when "vmware-workstation"
-        $used_shared_folder_type = "hbsf"
-      else
-        $used_shared_folder_type = "Unknown"
-      end
-
-      guest_path = File.expand_path($vagrant_shared_folder_path)
-      self.info("Mounting #{$used_shared_folder_type.upcase} share:\n\t\"#{shared_folder_path}\" <=> \"#{guest_path}\"")
-
-      return true
+      true
     end
 
-    def handleHiera()
-      unless $vagrant_puppet_hiera_file_path.empty?
+    def handle_hiera
+      if $vagrant_puppet_hiera_file_path.empty?
+        false
+      else
         unless File.exists?($vagrant_puppet_hiera_file_path)
           self.warning("Hiera.yml disabled. File not found!\n\t\t\t=> \"#{$vagrant_puppet_hiera_file_path}\"")
           return false
         end
 
         self.info("Hiera Configuration file found! Hiera enabled.\n\t\t\t=> #{$vagrant_puppet_hiera_file_path}")
-        return true
-      else
-        return false
+        true
       end
     end
   end

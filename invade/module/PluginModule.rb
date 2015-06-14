@@ -12,22 +12,22 @@
 module Invade
   class Plugin < Base
 
-    MODULE = "PLUGINS"
+    MODULE = 'PLUGINS'
 
-    def initialize()
+    def initialize
       @plugins = Array.new
 
-      self.autoUpdatePlugins()
+      self.auto_update_plugins
 
-      if(self.checkPlugins())
-        self.info("Check Plugins...")
-        self.installPlugins()
+      if self.check_plugins
+        self.info('Check Plugins...')
+        self.install_plugins
       end
     end
 
-    def checkPlugins()
+    def check_plugins
 
-      if(InvadeOs.isWindows?)
+      if InvadeOs.is_windows
         $vagrant_plugins_basic_windows.each { |plugin|
           unless Vagrant.has_plugin?(plugin)
             @plugins.push(plugin)
@@ -41,30 +41,39 @@ module Invade
         end
       }
 
-      if(@plugins.count > 0)
+      $vagrant_plugins_basic_gems.each { |plugin|
+        unless Vagrant.has_plugin?(plugin[0...-4])
+          @plugins.push(plugin)
+        end
+      }
+
+      if @plugins.count > 0
         return true
       end
 
-      return false
+      false
     end
 
-    def installPlugins()
+    def install_plugins
       self.info("Plugins needed to be installed:\n\t#{@plugins.join("\n\t")}")
 
       @plugins.each { |plugin|
         unless Vagrant.has_plugin?(plugin)
-          system("vagrant plugin install #{plugin}")
+          if plugin.end_with? '.gem'
+            system("vagrant plugin install gems/#{plugin}")
+          else
+            system("vagrant plugin install #{plugin}")
+          end
         end
       }
 
-      self.success("All plugins installed! Please run vagrant up again!")
-      abort
-
+      self.success('All plugins installed! Please run vagrant up again!')
+      exit
     end
 
-    def autoUpdatePlugins()
-      if($vagrant_plugins_auto_update == true)
-        system("vagrant plugin update")
+    def auto_update_plugins
+      if $vagrant_plugins_auto_update
+        system('vagrant plugin update')
       end
     end
 

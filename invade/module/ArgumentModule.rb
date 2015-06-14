@@ -12,20 +12,17 @@
 module Invade
   class Argument < Base
 
-    MODULE = "ARGUMENT"
+    MODULE = 'ARGUMENT'
 
     def valid?
-      valid_arguments = ["up", "reload"]
+      valid_arguments = %w(up reload)
       arg = ARGV[0].to_s
 
       valid_arguments.each { |x|
-        if x === arg
-          return true
-        end
+        return true if x === arg
       }
 
-      return false
-
+      false
     end
   end
 end
