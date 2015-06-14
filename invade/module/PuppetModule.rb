@@ -76,6 +76,7 @@ module Invade
       if module_name.nil? || module_name.empty?
         module_name = get_module_name_from_repo_path(module_path)
       end
+
       definition = "mod '#{module_name}',"
 
       # build git url part
@@ -120,12 +121,23 @@ module Invade
       else
         if dash_count > 0
           cut_character = '-'
-          repository_name = repository_name.partition(cut_character).last
-          puts repository_name
+          i = 0
+          while i < dash_count do
+            repository_name = repository_name.partition(cut_character).last
+            i +=1
+          end
         else
           cut_character = '_'
-          repository_name = repository_name.partition(cut_character).last
+          i = 0
+          while i < lower_dash_count do
+            repository_name = repository_name.partition(cut_character).last
+            i +=1
+          end
         end
+      end
+
+      if repository_path.include? 'innogames/invade-'
+        repository_name = "invade-#{repository_name}"
       end
 
       repository_name
